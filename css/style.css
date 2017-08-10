@@ -1,0 +1,124 @@
+/*
+* This css stylesheets for wp-random-post-inside plugin.
+* Package Name		: WP Random Post Inside
+* Package Version	: 1.5.2
+* Package Author	: MD. Anisur Rahman Bhuyan
+*/
+
+/* Post Box Css */
+.wprpi_title {
+	font-size: 15px;
+	font-weight: bold;
+	color: #333;
+	display: block;
+	margin-bottom: 12px;
+}
+
+/* Post links css */
+.wp_random_inside {
+    margin: 10px 0;
+    overflow: hidden;
+    clear: both;
+}
+.wp_random_inside a {
+    color: #F54542 !important;
+    line-height: 25px;
+}
+.wp_random_inside a:hover {
+	color: #DD5342 !important;
+    text-decoration: none;
+}
+.wp_random_inside span.dashicons{
+    color: #F54542;
+    line-height: unset;
+}
+/* Settings Options Css */
+.wprpi_opt_content {
+    float: right;
+    width: 25%;
+    border: 2px solid #bcbcbc;
+    background: #fff;
+    padding: 15px;
+}
+.wprpi_form_area {
+    float: left;
+    width: 70%;
+}
+.wprpi_heading {
+    font-weight: normal !important;
+    color: #444 !important;
+}
+.wprpi_opt_content header {
+    text-align: center;
+}
+.wprpi_opt_content header img {
+    max-width: 100%;
+    display: block;
+}
+.wprpi_opt_content hr {
+    display: block;
+    margin: 15px 0;
+}
+.wprpi_info {
+    display: block;
+    margin-bottom: 20px;
+}
+.wprpi_info h3 {
+    color: #333;
+    font-size: 15px;
+}
+.wprpi_info strong {
+    color: #444;
+}
+.wprpi_info .code {
+    color: #ff0025;
+}
+.wprpi_info a {
+    text-decoration: none;
+}
+.wprpi-form td span {
+    display: block;
+    margin: 5px 0px;
+    color: #555;
+}
+.wprpi-form label.checkbox, .wprpi-form label.radiobtn {
+    display: inline-block;
+    margin: 5px 5px 0px 0px;
+}
+.wprpi-form label.radiobtn {
+    background: #ddd;
+    padding: 5px 7px;
+    border: 1px solid #777;
+    border-radius: 3px;
+}
+.wprpi-form label.radiobtn input {
+    display: inline-block;
+    margin: 3px;
+    display: none;
+}
+.wprpi-form label.radiobtn input[type=radio]:checked + i {
+  color: #ff3f00;
+}
+.wprpi-post-title {
+    line-height: 25px;
+    margin: 5px;
+}
+.wprpi-thumbnail {
+    float: left;
+    width: 25%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+    text-align: center;
+}
+.wprpi-thumbnail img {
+    width: 100%;
+    height: auto;
+}
+.wprpi-content > p {
+    margin: 7px 5px;
+}
+.wprpi_hide {
+    display: none;
+}
