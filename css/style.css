@@ -1,7 +1,7 @@
 /*
 * This css stylesheets for wp-random-post-inside plugin.
 * Package Name		: WP Random Post Inside
-* Package Version	: 1.5.2
+* Package Version	: 1.6.4
 * Package Author	: MD. Anisur Rahman Bhuyan
 */
 
@@ -22,7 +22,7 @@
 }
 .wp_random_inside a {
     color: #F54542 !important;
-    line-height: 25px;
+    line-height: 2;
 }
 .wp_random_inside a:hover {
 	color: #DD5342 !important;
@@ -31,7 +31,9 @@
 .wp_random_inside span.dashicons{
     color: #F54542;
     line-height: unset;
+    margin-right: 5px;
 }
+
 /* Settings Options Css */
 .wprpi_opt_content {
     float: right;
@@ -63,8 +65,9 @@
     display: block;
     margin-bottom: 20px;
 }
-.wprpi_info h3 {
-    color: #333;
+.wprpi-expand-faq {
+    cursor: pointer;
+    color: #0081ff;
     font-size: 15px;
 }
 .wprpi_info strong {
@@ -75,6 +78,16 @@
 }
 .wprpi_info a {
     text-decoration: none;
+}
+.wprpi-faq-info > span {
+    display: block;
+    margin-bottom: 10px;
+}
+.wprpi-expand-faq:hover {
+    color: #c03b3b;
+}
+.wprpi-faq-info {
+    display: none;
 }
 .wprpi-form td span {
     display: block;
@@ -103,7 +116,16 @@
     line-height: 25px;
     margin: 5px;
 }
+.thumbexcerpt-true .wprpi-post-title {
+    letter-spacing: 0;
+    font-size: 1rem;
+    line-height: inherit;
+    margin-bottom: 5px;
+}
 .wprpi-thumbnail {
+    padding: 5px;
+}
+.wprpi-thumbnail-size {
     float: left;
     width: 25%;
     margin-right: 10px;
@@ -118,7 +140,14 @@
 }
 .wprpi-content > p {
     margin: 7px 5px;
+    text-align: justify;
 }
 .wprpi_hide {
     display: none;
+}
+.wprpi_form_area .wp-color-result-text {
+	margin: 0 !important;
+}
+#wprpi-cpt .checkbox {
+    width: 30%;
 }
