@@ -1,11 +1,11 @@
 === WP Random Post Inside ===
 Contributors: a.r.bhuyan
 Tags: WordPress, WordPress Posts, WP Related Posts, WordPress Random Posts, Related Posts Inside, Random Posts Inside
-Requires at least: 3.8
-Tested up to: 4.8.1
-Stable tag: 1.5.2
+Requires at least: 4.0
+Tested up to: 5.2.2
+Stable tag: 1.6.3
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 WP Random Post Inside plugin will allow you to show random post inside the post. It will help you to reduce website bounce rate by transferring user to check other pages related post. It'll also helpful for seo by linking internal posts.
@@ -21,7 +21,7 @@ Features Included:
 *	Shortcode support added.
 
 == About the Author ==
-A plugin by MD. Anisur Rahman Bhuyan [WordPress Developer], [http://anisbd.com], [info@anisbd.com]
+A plugin by MD. Anisur Rahman Bhuyan [WordPress Developer], [https://anisbd.com], [info@anisbd.com]
 
 == Problems and Support ==
 If you face any problem and need urgent help feel free to email me (info@anisbd.com) with plugin reference or create a ticket to plugin support on WordPress.
@@ -66,9 +66,21 @@ There are several parameters available to use in a shortcode like as :
 That means the post has no related posts / no relative category selected. Feel free to check another post to confirm if your problem exists.
 
 = For more details ? =
-* http://anisbd.com/update-informations-of-wp-random-post-inside-wordpress-plugin/
+* https://anisbd.com/update-informations-of-wp-random-post-inside-wordpress-plugin/
 
 == Changelog ==
+
+= 1.6.3 =
+
+* 12/07/2019 Gutenberg support.
+
+= 1.6.2 =
+
+* 31/12/2018 color updates.
+
+= 1.6.1 =
+
+* 29/07/2018 new settings option added.
 
 = 1.5.2 =
 
@@ -87,6 +99,15 @@ That means the post has no related posts / no relative category selected. Feel f
 * 02/01/2016 First released of the plugin.
 
 == Upgrade Notice ==
+
+= 1.6.3 =
+Gutenberg Support.
+
+= 1.6.2 =
+Color updates.
+
+= 1.6.1 =
+New settings option added for showing random posts by post type.
 
 = 1.5.2 =
 Post thumbnail and excerpt support added. Localization support updated.

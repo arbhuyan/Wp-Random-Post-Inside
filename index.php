@@ -1,19 +1,22 @@
 <?php
 /*
 Plugin Name: WP Random Post Inside
-Plugin URI: http://anisbd.com/wp-random-post-inside-plugin-informations/
+Plugin URI: https://anisbd.com/wp-random-post-inside-plugin-informations/
 Description: This plugin will show random posts inside a post. It will help you to seo & reduce bounce rate.
-Version: 1.5.2
+Version: 1.6.3
 Author: MD. Anisur Rahman Bhuyan
-Author URI: http://anisbd.com
+Author URI: https://anisbd.com
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: wp-random-post-inside
 Domain Path: /languages
 */
 
 /* Exit if accessed directly */
 defined( 'ABSPATH' ) || exit;
+
+/* plugin informations */
+define( 'WPRPI_VERSION', '1.6.3' );
 
 /* basic setup files */
 function wprpi_initial_setup() {

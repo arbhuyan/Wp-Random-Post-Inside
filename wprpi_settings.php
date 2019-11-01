@@ -11,8 +11,10 @@ function wprpi_opt_color_picker( $hook ) {
         // Add the color picker css file
         wp_enqueue_style( 'wp-color-picker' );
          
-        // Add wprpi_init_js file to initialize color picker
-        wp_enqueue_script( 'wprpi_init_js', plugins_url( 'js/wprpi_init.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
+        // Add wprpi-color file to initialize color picker
+        wp_enqueue_script( 'wprpi-init', plugins_url( 'js/wprpi-init.js', __FILE__ ), array( 'jquery' ), WPRPI_VERSION, true );
+
+        wp_enqueue_script( 'wprpi-color', plugins_url( 'js/wprpi-color-settings.js', __FILE__ ), array( 'wp-color-picker' ), WPRPI_VERSION, true );
     }
 }
 add_action( 'admin_enqueue_scripts', 'wprpi_opt_color_picker' );
@@ -39,10 +41,15 @@ function register_wprpi_settings_opt() {
     register_setting( 'wprpi-settings-opt', 'wprpi_hover_color' );
     register_setting( 'wprpi-settings-opt', 'wprpi_bg_color' );
     register_setting( 'wprpi-settings-opt', 'wprpi_title_color' );
+    register_setting( 'wprpi-settings-opt', 'wprpi_supported_cpt' );
 }
 
 /* Option panel display */
 function wprpi_settings() {
+	// hide plugin notice
+	if( ! get_option( 'wprpi_notice_dismiss' ) ) {
+		update_option( 'wprpi_notice_dismiss', 1 );
+	}
 ?>
 <div class="wrap">
     <h2><?php esc_html_e('WP Random Post Inside Settings', 'wp-random-post-inside'); ?></h2>
@@ -115,6 +122,44 @@ function wprpi_settings() {
                     </label>
                 </td>
             </tr>
+
+            <tr valign="top">
+                <th scope="row"><?php esc_html_e( 'Allowed post types', 'wp-random-post-inside' ); ?></th>
+                <td id="wprpi-cpt">
+                    <?php
+                    $args = array(
+                        'public'    => true
+                    );
+
+                    // default values
+                    $cpt_checked    = "";
+                    $output         = 'objects'; // names or objects, note names is the default
+                    $operator       = 'and'; // 'and' or 'or'
+                    $post_types     = get_post_types( $args, $output, $operator );
+
+                    $wprpi_cpt = ( is_array( get_option( 'wprpi_supported_cpt' ) ) ) ? get_option( 'wprpi_supported_cpt' ) : false; ?>
+
+                    <label class="checkbox" id="select_all_cpt" for="all_post_types">
+                        <?php $cpt_checked = ( count( $post_types ) == count ( $wprpi_cpt ) ) ? "checked" : false; ?>
+                        <input id="all_post_types" type="checkbox" class="select_all_cpt" <?php echo $cpt_checked; ?>>
+                        <?php _e("Select All", "wp-random-post-inside"); ?>
+                    </label>
+
+                    <?php foreach ($post_types  as $post_type ):
+                        if( false === get_option( 'wprpi_supported_cpt' ) ) {
+                            $cpt_checked = ( "post" == $post_type->name ) ? "checked" : false;
+                        }
+
+                        if( is_array( $wprpi_cpt ) ){
+                            $cpt_checked = ( in_array( $post_type->name, $wprpi_cpt ) ) ? "checked" : false;
+                        } ?>
+                        <label class="checkbox" for="<?php echo $post_type->name; ?>">
+                            <input class="cpt_checkbox" id="<?php echo $post_type->name; ?>" type="checkbox" value="<?php echo $post_type->name; ?>" name="wprpi_supported_cpt[]" <?php echo $cpt_checked; ?>>
+                            <?php echo ucfirst( $post_type->labels->menu_name ); ?>
+                        </label>
+                    <?php endforeach; ?>
+                </td>
+            </tr>
              
             <tr valign="top">
                 <th scope="row"><?php esc_html_e( 'Link color', 'wp-random-post-inside' ); ?></th>
@@ -134,7 +179,7 @@ function wprpi_settings() {
 
             <tr valign="top">
                 <th scope="row"><?php esc_html_e( 'Background color', 'wp-random-post-inside' ); ?></th>
-                <td><input class="color-field" data-default-color="transparent" type="text" name="wprpi_bg_color" value="<?php echo esc_attr( get_option('wprpi_bg_color') ); ?>" /></td>
+                <td><input class="color-field" data-default-color="#fff" type="text" name="wprpi_bg_color" value="<?php echo esc_attr( get_option('wprpi_bg_color') ); ?>" /></td>
             </tr>
 
             <tr valign="top">
@@ -154,127 +199,129 @@ function wprpi_settings() {
 
         <hr>
 
-        <span class="wprpi_info">
-            <h3>
-                <span class="dashicons dashicons-awards"></span>
-                <?php esc_html_e('Using Shortcode', 'wp-random-post-inside'); ?>
+        <section class="wprpi_info">
+            <h3 class="wprpi-expand-faq">
+                <span class="dashicons dashicons-arrow-right-alt2"></span>
+                <?php esc_html_e('How to use shortcode ?', 'wp-random-post-inside'); ?>
             </h3>
-            <p>
+            <div class="wprpi-faq-info">
                 <?php printf(
                     /* translators: %s: Name of a shortcode: [wprpi] */
                     __(
                         'To using shortcode add %s in your post where you want to show related post.',
                         'wp-random-post-inside'
                     ),
-                    '<span class="code">[wprpi]</span>'
+                    '<strong class="code">[wprpi]</strong>'
                 ); ?>
                 
-            </p>
-        </span> <!-- /.wprpi_info -->
+            </div>
+        </section> <!-- /.wprpi_info -->
 
-        <span class="wprpi_info">
-            <h3>
-                <span class="dashicons dashicons-awards"></span>
+        <section class="wprpi_info">
+            <h3 class="wprpi-expand-faq">
+                <span class="dashicons dashicons-arrow-right-alt2"></span>
                 <?php esc_html_e('Using Shortcode with parameter', 'wp-random-post-inside'); ?>
             </h3>
             
-            <p><strong>title:</strong>
-                <?php esc_html_e('allow a title you want to show with related posts.', 'wp-random-post-inside'); ?>
-            </p>
-            <p><strong>by:</strong>
-                <?php printf(
-                    /* translators: %s: parameter name */
-                    __(
-                        'allow ( %s ) value for this parameter',
-                        'wp-random-post-inside'
-                    ),
-                    'category / tag / both'
-                ); ?>
-            </p>
-            <p><strong>post:</strong>
-                <?php esc_html_e('allow total number of posts you want to show.', 'wp-random-post-inside'); ?>
-            </p>
-            <p><strong>icon:</strong>
-                 <?php printf(
-                    /* translators: %s: parameter name */
-                    __(
-                        'allow ( %s ) value for this parameter.',
-                        'wp-random-post-inside'
-                    ),
-                    'show / none'
-                ); ?>
-            </p>
-            <p><strong>post_id:</strong>
-                <?php printf(
-                    /* translators: %s: post id */
-                    __(
-                        'allow posts id separated by comma (Ex: %s).',
-                        'wp-random-post-inside'
-                    ),
-                    'post_id="1,12,18"'
-                ); ?>
-            </p>
-            <p><strong>cat_id:</strong>
-                <?php printf(
-                    /* translators: %s: category id */
-                    __(
-                        'allow category id separated by comma (Ex: %s).',
-                        'wp-random-post-inside'
-                    ),
-                    'cat_id="1,5,11"'
-                ); ?>
-            </p>
-            <p><strong>tag_slug:</strong>
-                <?php esc_html_e('allow tag slugs separated by comma (Ex: hello,world).', 'wp-random-post-inside'); ?>
-            </p>
-            <p><strong>thumb_excerpt:</strong>
-                <?php printf(
-                    /* translators: %s: parameter name */
-                    __(
-                        'Show random post thumbnail and excerpt. Allow ( %s ) parameter. default value is false.',
-                        'wp-random-post-inside'
-                    ),
-                    'true / false'
-                ); ?>
-            </p>
-            <p><strong>excerpt_length:</strong>
-                <?php printf(
-                    /* translators: %d: number */
-                    __(
-                        'Limit random post excerpt length. (Ex: %d)',
-                        'wp-random-post-inside'
-                    ),
-                    '55'
-                ); ?>
-            </p>
-
-            <p>
-                <?php esc_html_e('Example:', 'wp-random-post-inside'); ?> <br>
-                <span class="code">
-                    [wprpi title="Related Post" by="category" post="2" icon="show" thumb_excerpt="true" excerpt_length="55"]
+            <div class="wprpi-faq-info">
+                <span><strong><?php _e('title:', 'wp-random-post-inside'); ?></strong>
+                    <?php esc_html_e('allow a title you want to show with related posts.', 'wp-random-post-inside'); ?>
                 </span>
-            </p>
-        </span> <!-- /.wprpi_info -->
+                <span><strong><?php _e('by:', 'wp-random-post-inside'); ?></strong>
+                    <?php printf(
+                        /* translators: %s: parameter name */
+                        __(
+                            'allow ( %s ) value for this parameter',
+                            'wp-random-post-inside'
+                        ),
+                        'category / tag / both'
+                    ); ?>
+                </span>
+                <span><strong><?php _e('post:', 'wp-random-post-inside'); ?></strong>
+                    <?php esc_html_e('allow total number of posts you want to show.', 'wp-random-post-inside'); ?>
+                </span>
+                <span><strong><?php _e('icon:', 'wp-random-post-inside'); ?></strong>
+                     <?php printf(
+                        /* translators: %s: parameter name */
+                        __(
+                            'allow ( %s ) value for this parameter.',
+                            'wp-random-post-inside'
+                        ),
+                        'show / none'
+                    ); ?>
+                </span>
+                <span><strong><?php _e('post_id:', 'wp-random-post-inside'); ?></strong>
+                    <?php printf(
+                        /* translators: %s: post id */
+                        __(
+                            'allow posts id separated by comma (Ex: %s).',
+                            'wp-random-post-inside'
+                        ),
+                        'post_id="1,12,18"'
+                    ); ?>
+                </span>
+                <span><strong><?php _e('cat_id:', 'wp-random-post-inside'); ?></strong>
+                    <?php printf(
+                        /* translators: %s: category id */
+                        __(
+                            'allow category id separated by comma (Ex: %s).',
+                            'wp-random-post-inside'
+                        ),
+                        'cat_id="1,5,11"'
+                    ); ?>
+                </span>
+                <span><strong><?php _e('tag_slug:', 'wp-random-post-inside'); ?></strong>
+                    <?php esc_html_e('allow tag slugs separated by comma (Ex: hello,world).', 'wp-random-post-inside'); ?>
+                </span>
+                <span><strong><?php _e('thumb_excerpt:', 'wp-random-post-inside'); ?></strong>
+                    <?php printf(
+                        /* translators: %s: parameter name */
+                        __(
+                            'Show random post thumbnail and excerpt. Allow ( %s ) parameter. default value is false.',
+                            'wp-random-post-inside'
+                        ),
+                        'true / false'
+                    ); ?>
+                </span>
+                <span><strong><?php _e('excerpt_length:', 'wp-random-post-inside'); ?></strong>
+                    <?php printf(
+                        /* translators: %d: number */
+                        __(
+                            'Limit random post excerpt length. (Ex: %d)',
+                            'wp-random-post-inside'
+                        ),
+                        '55'
+                    ); ?>
+                </span>
+
+                <span>
+                    <?php esc_html_e('Example:', 'wp-random-post-inside'); ?> <br>
+                    <span class="code">
+                        [wprpi title="Related Post" by="category" post="2" icon="show" thumb_excerpt="true" excerpt_length="55"]
+                    </span>
+                </span>
+            </div>
+        </section> <!-- /.wprpi_info -->
 
         <hr>
 
-        <span class="wprpi_info">
+        <section class="wprpi_info">
             <h3>
                 <span class="dashicons dashicons-awards"></span>
                 <?php esc_html_e('Need more help?', 'wp-random-post-inside'); ?>
             </h3>
-            <p>
+            <div>
                 <?php printf(
                     /* translators: 1: plugin page url 2: wordpress repository url */
                     __(
                         'Visit <a href="%1$s">this plugin page</a> or <a href="%2$s">WordPress Support</a> and leave a comment with your question, I will try to help you find out the solution. Thank you for using this plugin and do not forget to rate it :)',
                         'wp-random-post-inside'
                     ),
-                    'http://anisbd.com/update-informations-of-wp-random-post-inside-wordpress-plugin/',
+                    'https://anisbd.com/update-informations-of-wp-random-post-inside-wordpress-plugin/',
                     'https://wordpress.org/support/plugin/wp-random-post-inside'
                 ); ?>
-            </p>
-        </span> <!-- /.wprpi_info -->
+            </div>
+        </section> <!-- /.wprpi_info -->
     </div> <!-- /.wprpi_opt_content -->
 </div>
 <?php }
