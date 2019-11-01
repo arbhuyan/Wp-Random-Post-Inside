@@ -2,8 +2,8 @@
 Contributors: a.r.bhuyan
 Tags: WordPress, WordPress Posts, WP Related Posts, WordPress Random Posts, Related Posts Inside, Random Posts Inside
 Requires at least: 4.0
-Tested up to: 5.2.2
-Stable tag: 1.6.3
+Tested up to: 5.2.4
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,10 @@ That means the post has no related posts / no relative category selected. Feel f
 
 == Changelog ==
 
+= 1.6.4 =
+
+* 01/11/2019 Permalink & shortcode updated.
+
 = 1.6.3 =
 
 * 12/07/2019 Gutenberg support.
@@ -99,6 +103,9 @@ That means the post has no related posts / no relative category selected. Feel f
 * 02/01/2016 First released of the plugin.
 
 == Upgrade Notice ==
+
+= 1.6.4 =
+Permalink & shortcode updated.
 
 = 1.6.3 =
 Gutenberg Support.

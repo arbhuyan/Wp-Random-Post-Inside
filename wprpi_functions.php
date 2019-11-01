@@ -75,6 +75,7 @@ if( !function_exists('wprpi_related_color_settings') ) {
 				    background: '.$related_bg_color.';
 					padding: 7px;
 					border-radius: 3px;
+					margin-bottom: 20px;
 				}
 				.wprpi_title {
 					border-bottom: 1px solid;
@@ -205,12 +206,12 @@ if( !function_exists('wprpi_related_content') ) {
 				/* extending content */
 				$content = implode( '</p>', array_splice($paragraph, 0, $slice_para) );
 				if( $related ){
-					$content .= '<div class="wp_random_inside">'.$icon_val.' <a href="'.esc_url(get_page_link( $related[0] )).'">'.get_the_title( $related[0] ).'</a></div>';
+					$content .= '<div class="wp_random_inside">'.$icon_val.' <a href="'.esc_url(get_permalink( $related[0] )).'">'.get_the_title( $related[0] ).'</a></div>';
 				}
 				
 				$content .= implode( '</p>', $paragraph );
 				if( count($related) > 1 ){
-					$content .= '<div class="wp_random_inside">'.$icon_val.' <a href="'.esc_url(get_page_link( $related[1] )).'">'.get_the_title( $related[1] ).'</a></div>';
+					$content .= '<div class="wp_random_inside">'.$icon_val.' <a href="'.esc_url(get_permalink( $related[1] )).'">'.get_the_title( $related[1] ).'</a></div>';
 				}
 				
 			} else {
@@ -226,13 +227,13 @@ if( !function_exists('wprpi_related_content') ) {
 				$content = implode( ' ', array_splice($content_main, 0, $slice_para) );
 				
 				if( $related ){
-					$content .= '<div class="wp_random_inside">'.$icon_val.' <a href="'.esc_url(get_page_link( $related[0] )).'">'.get_the_title( $related[0] ).'</a></div><p>';
+					$content .= '<div class="wp_random_inside">'.$icon_val.' <a href="'.esc_url(get_permalink( $related[0] )).'">'.get_the_title( $related[0] ).'</a></div><p>';
 				}
 				
 				$content .= implode( ' ', $content_main );
 				
 				if( count($related) > 1 ){
-					$content .= '<div class="wp_random_inside">'.$icon_val.' <a href="'.esc_url(get_page_link( $related[1] )).'">'.get_the_title( $related[1] ).'</a></div><p>';
+					$content .= '<div class="wp_random_inside">'.$icon_val.' <a href="'.esc_url(get_permalink( $related[1] )).'">'.get_the_title( $related[1] ).'</a></div><p>';
 				}
 			}
 
@@ -250,7 +251,7 @@ if( !function_exists('wprpi_related_content') ) {
 /**
 *	Shortcode Support for wp-random-post-inside plugin
 *	
-*	[wprpi by="category" post="5" title="Related Post" thumbnail="true" excerpt="true" icon="show" cat_id="1,2,3" post_id="1,2,3" tag_slug="hello,world"]
+*	[wprpi title="Related Post" by="category" post="2" icon="show" thumb_excerpt="true" excerpt_length="55"]
 */
 
 if( !function_exists('wprpi_short_code_func') ) {
@@ -375,7 +376,7 @@ if( !function_exists('wprpi_short_code_func') ) {
 				$wprpi_val .= '<div class="wprpi-content'.$thumbexcerpt.'">';
 				$wprpi_val .= '<h4 class="wprpi-post-title">
 									'.$icon_val.' 
-									<a href="'.esc_url(get_page_link( $post->ID )).'">'.get_the_title( $post->ID ).'</a>
+									<a href="'.esc_url(get_permalink( $post->ID )).'">'.get_the_title( $post->ID ).'</a>
 							   </h4>';
 				$wprpi_val .= $thumbnail;
 				$wprpi_val .= '<p>'.wp_trim_words( $post->post_content, $wprpi_value['excerpt_length'] ).'</p>';
@@ -383,7 +384,7 @@ if( !function_exists('wprpi_short_code_func') ) {
 
 			} else {
 				$wprpi_val .= $icon_val;
-				$wprpi_val .= '<a href="'.esc_url(get_page_link( $post->ID )).'">'.get_the_title( $post->ID ).'</a>';
+				$wprpi_val .= '<a href="'.esc_url(get_permalink( $post->ID )).'">'.get_the_title( $post->ID ).'</a>';
 			}
 			$wprpi_val .= '</div>';
 		}

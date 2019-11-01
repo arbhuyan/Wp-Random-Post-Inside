@@ -1,17 +1,17 @@
 /*
 * This css stylesheets for wp-random-post-inside plugin.
-* Package Name      : WP Random Post Inside
-* Package Version   : 1.6.3
-* Package Author    : MD. Anisur Rahman Bhuyan
+* Package Name		: WP Random Post Inside
+* Package Version	: 1.6.3
+* Package Author	: MD. Anisur Rahman Bhuyan
 */
 
 /* Post Box Css */
 .wprpi_title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #333;
-    display: block;
-    margin-bottom: 12px;
+	font-size: 15px;
+	font-weight: bold;
+	color: #333;
+	display: block;
+	margin-bottom: 12px;
 }
 
 /* Post links css */
@@ -22,10 +22,10 @@
 }
 .wp_random_inside a {
     color: #F54542 !important;
-    line-height: 20px;
+    line-height: 2;
 }
 .wp_random_inside a:hover {
-    color: #DD5342 !important;
+	color: #DD5342 !important;
     text-decoration: none;
 }
 .wp_random_inside span.dashicons{
@@ -116,7 +116,16 @@
     line-height: 25px;
     margin: 5px;
 }
+.thumbexcerpt-true .wprpi-post-title {
+    letter-spacing: 0;
+    font-size: 1rem;
+    line-height: inherit;
+    margin-bottom: 5px;
+}
 .wprpi-thumbnail {
+    padding: 5px;
+}
+.wprpi-thumbnail-size {
     float: left;
     width: 25%;
     margin-right: 10px;
@@ -131,12 +140,13 @@
 }
 .wprpi-content > p {
     margin: 7px 5px;
+    text-align: justify;
 }
 .wprpi_hide {
     display: none;
 }
 .wprpi_form_area .wp-color-result-text {
-    margin: 0 !important;
+	margin: 0 !important;
 }
 #wprpi-cpt .checkbox {
     width: 30%;
